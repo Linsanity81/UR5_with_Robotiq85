@@ -5,7 +5,7 @@
     This file is created for UR5 with robotiq85 project.
     The maintainer is Rulin Chen(Linsanity81) from Shantou University in China.
 
-    Through this file, you can control UR5 by keyborad input.
+    Through this file, you can control real UR5 by keyborad input.
 
     usage:
     #roslaunch ur5_joint_limit_config ur5_bringup.launch
@@ -19,7 +19,6 @@ import actionlib
 from control_msgs.msg import *
 from trajectory_msgs.msg import *
 import roslib; roslib.load_manifest('ur_driver')
-from rbx2_arm_nav.arm_utils import scale_trajectory_speed
 
 JOINT_NAMES = ['shoulder_pan_joint', 'shoulder_lift_joint', 'elbow_joint',
                'wrist_1_joint', 'wrist_2_joint', 'wrist_3_joint']
@@ -103,6 +102,7 @@ class MoveItDemo:
         arm.set_named_target('waiting')
         traj = arm.plan()
 
+        # Drive the real UR5
         g = FollowJointTrajectoryGoal()
         g.trajectory = traj.joint_trajectory
         client.send_goal(g)
